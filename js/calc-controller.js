@@ -21,7 +21,7 @@ class CalcController {
 			this.displayTime = this.currentDate.toLocaleTimeString(this.locale);
 		}, 1000);
 	}
-	
+
 	addEventListenerAll(element, events, fn){
 		events.split(' ').forEach(event => {
 			element.addEventListener(event, fn, false);
@@ -40,7 +40,7 @@ class CalcController {
 	setError(){
 		this.displayCalc = "Error";
 	}
-	
+
 	execBtn(value){
 		switch (value){
 			case "ac":
@@ -50,22 +50,22 @@ class CalcController {
 				this.clearEntry();
 			break;
 			case "soma":
-				 
+
 			break;
 			case "subtracao":
-				 
+
 			break;
 			case "divisao":
-				 
+
 			break;
 			case "multiplicacao":
-				 
+
 			break;
 			case "porcento":
-				 
+
 			break;
 			case "igual":
-				 
+
 			break;
 			case '0':
 			case '1':
@@ -84,7 +84,7 @@ class CalcController {
 				break;
 		}
 	}
-	
+
 	initButtonsEvents(){
 		let buttons = document.querySelectorAll("#buttons > g, #parts > g");
 		buttons.forEach((btn, index)=>{
@@ -93,7 +93,7 @@ class CalcController {
 				this.execBtn(textBtn);
 			});
 			this.addEventListenerAll(btn, 'mouseover mouseup mousedown', e => {
-				btn.style.cursor = 'pointer';					 
+				btn.style.cursor = 'pointer';
 			});
 		});
 	}
