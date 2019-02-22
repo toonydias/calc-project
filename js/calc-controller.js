@@ -1,6 +1,6 @@
 class CalcController {
 	constructor(){
-		this.operation = [];
+		this._operation = [];
 		this._locale = 'pt-BR';
 		this._displayCalcEl = document.querySelector("#display");
 		this._dateEl = document.querySelector("#data");
@@ -33,8 +33,29 @@ class CalcController {
 	clearEntry(){
 		this._operation.pop();
 	}
+	getLastOperation(){
+		return this._operation[this._operation.length - 1];
+	}
+	setLastOperation(value){
+		this._operation[this._operation.length - 1] = value;
+	}
+	isOperator (value){
+		return (['+', '-', '*', '%', '/'].indexOf(value) > -1);
+	}
 	addOperation(value){
-		this._operation.push(value);
+		console.log('a', this.getLastOperation);
+		if (isNaN(this.getLastOperation())){
+			if (this.isOperator(value)){
+				this._setLastOperation(value);
+			} else if (isNaN(value)){
+				console.log(value);
+			} else {
+				this._operation.push(value);
+			}
+		} else {
+			let newValue = this.getLastOperation().toString() + value.toString();
+			this._operation.push(parseInt(newValue));
+		}
 		console.log(this._operation);
 	}
 	setError(){
@@ -50,22 +71,25 @@ class CalcController {
 				this.clearEntry();
 			break;
 			case "soma":
-
+				this.addOperation('+');
 			break;
 			case "subtracao":
-
+				this.addOperation('-');
 			break;
 			case "divisao":
-
+				this.addOperation('/');
 			break;
 			case "multiplicacao":
-
+				this.addOperation('*');
 			break;
 			case "porcento":
-
+				this.addOperation('%');
 			break;
 			case "igual":
 
+			break;
+			case 'ponto':
+				this.addOperation('.');
 			break;
 			case '0':
 			case '1':
@@ -84,7 +108,6 @@ class CalcController {
 				break;
 		}
 	}
-
 	initButtonsEvents(){
 		let buttons = document.querySelectorAll("#buttons > g, #parts > g");
 		buttons.forEach((btn, index)=>{
