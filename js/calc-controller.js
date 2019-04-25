@@ -10,14 +10,21 @@ class CalcController {
 		this._currentDate;
 		this.initialize();
 		this.initButtonsEvents();
-		this.initKeybord();
+		this.initKeyboard();
+	}
+	pasteFromClipboard(){
+		document.addEventListener('paste', e=>{
+			let text = e.clipboardData.getData('Text');
+			this.displayCalc = parseFloat(text);
+		});
 	}
 	copyToClipboard (){
 		let input = document.createElement('input');
 		input.value = this.displayCalc;
-		document.body.appendChild('input');
+		document.body.appendChild(input);
 		input.select();
 		document.execCommand('Copy');
+		input.remove();
 	}
 	initialize (){
 		this.setDisplayDateTime ();
@@ -31,8 +38,9 @@ class CalcController {
 			this.displayTime = this.currentDate.toLocaleTimeString(this.locale);
 		}, 1000);
 		this.setLastNumbertoDisplay();
+		this.pasteFromClipboard();
 	}
-	initKeybord(){
+	initKeyboard(){
 		document.addEventListener('keyup', e=>{
 			switch (e.key){
 			case "Escape":
